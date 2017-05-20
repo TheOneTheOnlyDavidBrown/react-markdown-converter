@@ -33,8 +33,10 @@ class Converter extends React.Component {
     // React component lifecycle hooks
 
     componentDidMount() {
+        console.log(this.props.match.params.id);
+        const mockDataId = this.props.match.params.id || 1;
         // leveraging the repo's url to the mock file as a mock api response
-        const mockDataUrl = 'https://raw.githubusercontent.com/TheOneTheOnlyDavidBrown/react-markdown-converter/master/client/data/mockData.json';
+        const mockDataUrl = `https://raw.githubusercontent.com/TheOneTheOnlyDavidBrown/react-markdown-converter/master/client/data/mockData${mockDataId}.json`;
         // should use a third party promise (or observable) library because fetch is still experimental. using it for demo purposes
         fetch(mockDataUrl).then((response) => {
             return response.json();
@@ -46,6 +48,7 @@ class Converter extends React.Component {
     }
     render() {
         if (this.props && this.props.flavor) converter.setFlavor(this.props.flavor);
+        debugger;
         return (
             <form>
                 <div className="col-xs-6 from-group">
