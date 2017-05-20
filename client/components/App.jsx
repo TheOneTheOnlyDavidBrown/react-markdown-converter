@@ -5,10 +5,11 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import Home from './Home.jsx';
 import Converter from './Converter.jsx';
 
 export default class App extends React.Component {
-    onSuccess(data = {}){
+    onSuccess(data = {}) {
         console.log(data)
     }
     render() {
@@ -16,14 +17,13 @@ export default class App extends React.Component {
             <div>
                 <Router>
                     <div>
-                      <ul>
-                        <li><Link to="/">New</Link></li>
-                        <li><Link to="/markdown/1">Example 1</Link></li>
-                        <li><Link to="/markdown/2">Example 2</Link></li>
-                      </ul>
-
-                      <hr/>
-                      <Route path="/markdown/:id" component={Converter} onSuccess={this.onSuccess} flavor="github" />
+                        <ul className="nav nav-tabs">
+                          <li><Link to="/">Home</Link></li>
+                          <li><Link to="/markdown/1">Example 1</Link></li>
+                          <li><Link to="/markdown/2">Example 2</Link></li>
+                        </ul>
+                        <Route exact path="/" render={(props)=><Home {...props} />} />
+                        <Route path="/markdown/:id" render={(props)=><Converter onSuccess={this.onSuccess} flavor="github" {...props} />} />
                     </div>
                 </Router>
             </div>

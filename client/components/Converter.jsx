@@ -29,16 +29,12 @@ class Converter extends React.Component {
         this.setState({ text, html })
         this.props.onSuccess({message: 'Success from child', html}); // just here to show data being passed back up
     }
-
-    // React component lifecycle hooks
-
-    componentDidMount() {
-        console.log(this.props.match.params.id);
-        const mockDataId = this.props.match.params.id || 1;
+    //mock backend call
+    getMarkdown(id) {
         // leveraging the repo's url to the mock file as a mock api response
-        const mockDataUrl = `https://raw.githubusercontent.com/TheOneTheOnlyDavidBrown/react-markdown-converter/master/client/data/mockData${mockDataId}.json`;
-        // should use a third party promise (or observable) library because fetch is still experimental. using it for demo purposes
-        fetch(mockDataUrl).then((response) => {
+        const mockDataUrl = `https://raw.githubusercontent.com/TheOneTheOnlyDavidBrown/react-markdown-converter/master/client/data/mockData${id}.json`;
+            // should use a third party promise (or observable) library because fetch is still experimental. using it for demo purposes
+            fetch(mockDataUrl).then((response) => {
             return response.json();
         }).then((response) => {
             const text = response.text;
@@ -46,9 +42,18 @@ class Converter extends React.Component {
             this.setState({ text, html });
         });
     }
+
+    // React component lifecycle hooks
+
+    componentWillReceiveProps(newProps) {
+        this.getMarkdown(newProps.match.params.id);
+    }
+    componentDidMount() {
+        this.getMarkdown(this.props.match.params.id);
+    }
     render() {
         if (this.props && this.props.flavor) converter.setFlavor(this.props.flavor);
-        debugger;
+        //this.mockBackend();
         return (
             <form>
                 <div className="col-xs-6 from-group">
