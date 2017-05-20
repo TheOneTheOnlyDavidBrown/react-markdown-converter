@@ -3,6 +3,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  hashHistory,
   Link
 } from 'react-router-dom'
 import Home from './Home.jsx';
@@ -13,9 +14,10 @@ export default class App extends React.Component {
         console.log(data)
     }
     render() {
+        // should refactor this since it its the nav and the routes
         return (
             <div>
-                <Router>
+                <Router history={hashHistory}>
                     <div>
                         <ul className="nav nav-tabs">
                           <li><Link to="/">Home</Link></li>

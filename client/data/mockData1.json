@@ -1,3 +1,3 @@
 {
-    "text": "# Simple markdown converter in ReactJS! \n by [David Brown](http://davidcbrown.io) \n TODO: \n* Allow login/registration \n* Add routes \n* Implement save action (database, Google drive, Dropbox, Gist, et al.)"
+    "text": "# Simple markdown converter in ReactJS! \n by [David Brown](http://davidcbrown.io) \n TODO: \n* Allow login/registration \n* [x] Add routes \n* Implement save action (database, Google drive, Dropbox, Gist, et al.)"
 }
