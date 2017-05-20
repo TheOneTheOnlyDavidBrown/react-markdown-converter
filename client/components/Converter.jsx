@@ -1,6 +1,5 @@
 import React from 'react';
 import showdown from 'showdown';
-import mockData from '../data/mockData.json'; // mock response
 const converter = new showdown.Converter();
 
 class Converter extends React.Component {
@@ -28,17 +27,22 @@ class Converter extends React.Component {
         const text = e.target.value;
         const html = converter.makeHtml(text);
         this.setState({ text, html })
-        this.props.onSuccess({message:'Success from child', html}); // just here to show data being passed back up
+        this.props.onSuccess({message: 'Success from child', html}); // just here to show data being passed back up
     }
 
     // React component lifecycle hooks
 
     componentDidMount() {
-        // make api call here to load data
-        // mock success():
-        const text = mockData.text;
-        const html = converter.makeHtml(text);
-        this.setState({ text, html });
+        // leveraging the repo's url to the mock file as a mock api response
+        const mockDataUrl = 'https://raw.githubusercontent.com/TheOneTheOnlyDavidBrown/react-markdown-converter/master/client/data/mockData.json';
+        // should use a third party promise (or observable) library because fetch is still experimental. using it for demo purposes
+        fetch(mockDataUrl).then((response) => {
+            return response.json();
+        }).then((response) => {
+            const text = response.text;
+            const html = converter.makeHtml(text);
+            this.setState({ text, html });
+        });
     }
     render() {
         if (this.props && this.props.flavor) converter.setFlavor(this.props.flavor);
