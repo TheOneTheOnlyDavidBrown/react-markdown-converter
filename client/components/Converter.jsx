@@ -33,14 +33,13 @@ class Converter extends React.Component {
     getMarkdown(id) {
         // leveraging the repo's url to the mock file as a mock api response
         const mockDataUrl = `https://raw.githubusercontent.com/TheOneTheOnlyDavidBrown/react-markdown-converter/master/client/data/mockData${id}.json`;
-            // should use a third party promise (or observable) library because fetch is still experimental. using it for demo purposes
-            fetch(mockDataUrl).then((response) => {
-            return response.json();
-        }).then((response) => {
-            const text = response.text;
-            const html = converter.makeHtml(text);
-            this.setState({ text, html });
-        });
+        // should use a third party promise (or observable) library because fetch is still experimental. using it for demo purposes
+        fetch(mockDataUrl).then((response) => response.json())
+            .then((response) => {
+                const text = response.text;
+                const html = converter.makeHtml(text);
+                this.setState({ text, html });
+            });
     }
 
     // React component lifecycle hooks
