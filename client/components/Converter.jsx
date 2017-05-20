@@ -1,30 +1,15 @@
 import React from 'react';
 import showdown from 'showdown';
+import mockData from '../data/mockData.json'; // mock response
 const converter = new showdown.Converter();
 
 class Converter extends React.Component {
     constructor() {
         super();
-        this.state = this.initialState();
-        this.onTextChange = this.onTextChange.bind(this);
+        this.state = {}
+        this.onTextChange = this.onTextChange.bind(this); // binding to 'this' here rather so it works everywhere in the component rather than on the call for it
     }
-    initialState() {
-        const text = ''+
-            '# Simple markdown converter in ReactJS!\n'+
-            'by [David Brown](http://davidcbrown.io)\n\n'+
-            'TODO:\n'+
-            '* Allow login/registration\n'+
-            '* Add routes\n'+
-            '* Implement save action (database, Google drive, Dropbox, Gist, et al.)\n'
-        const html= converter.makeHtml(text);
-        return { text, html };
-    }
-    onTextChange(e) {
-        const text = e.target.value;
-        const html = converter.makeHtml(text);
-        this.setState({ text, html })
-        this.props.onSuccess({message:'Success from child', html});
-    }
+    // using a getter here so this.styles.someStyles can be referenced instead of this.styles().someStyle
     get styles() {
         const textArea = {
             marginTop: '10px',
@@ -38,6 +23,22 @@ class Converter extends React.Component {
             padding: '20px'
         };
         return { textArea, output }
+    }
+    onTextChange(e) {
+        const text = e.target.value;
+        const html = converter.makeHtml(text);
+        this.setState({ text, html })
+        this.props.onSuccess({message:'Success from child', html}); // just here to show data being passed back up
+    }
+
+    // React component lifecycle hooks
+
+    componentDidMount() {
+        // make api call here to load data
+        // mock success():
+        const text = mockData.text;
+        const html = converter.makeHtml(text);
+        this.setState({ text, html });
     }
     render() {
         if (this.props && this.props.flavor) converter.setFlavor(this.props.flavor);
