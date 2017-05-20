@@ -10,7 +10,7 @@ class Converter extends React.Component {
     }
     initialState() {
         const text = ''+
-            '#Simple markdown converter in ReactJS!\n'+
+            '# Simple markdown converter in ReactJS!\n'+
             'by [David Brown](http://davidcbrown.io)\n\n'+
             'TODO:\n'+
             '* Allow login/registration\n'+
@@ -23,6 +23,7 @@ class Converter extends React.Component {
         const text = e.target.value;
         const html = converter.makeHtml(text);
         this.setState({ text, html })
+        this.props.onSuccess({message:'Success from child', html});
     }
     get styles() {
         const textArea = {
@@ -39,6 +40,7 @@ class Converter extends React.Component {
         return { textArea, output }
     }
     render() {
+        if (this.props && this.props.flavor) converter.setFlavor(this.props.flavor);
         return (
             <form>
                 <div className="col-xs-6 from-group">
